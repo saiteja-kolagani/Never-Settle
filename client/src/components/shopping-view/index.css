@@ -1,0 +1,14 @@
+.card-tile-hover:hover {
+    box-shadow: 0px 4px 16px 0px #191e1f;
+    transition: 1s;
+}
+.card-tile-hover {
+    transition: 1s;
+}
+.add-to-cart-btn {
+    background-color: #374042;
+}
+.add-to-cart-btn:hover {
+    background-color: #191e1f !important;
+    transition: 0.5s;
+}
