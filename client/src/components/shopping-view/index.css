@@ -6,7 +6,7 @@
     transition: 1s;
 }
 .add-to-cart-btn {
-    background-color: #374042;
+    background-color: #374042 !important;
 }
 .add-to-cart-btn:hover {
     background-color: #191e1f !important;

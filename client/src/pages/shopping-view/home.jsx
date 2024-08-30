@@ -26,6 +26,10 @@ import { GrRestroomWomen } from "react-icons/gr";
 import { FaPerson } from "react-icons/fa6";
 import { SiNike, SiAdidas, SiPuma, SiZara } from "react-icons/si";
 
+import img from "../../assets/banner1.jpg";
+import img2 from "../../assets/banner2.jpg";
+import img3 from "../../assets/banner3.jpg";
+
 const categoriesWithIcon = [
   { id: "men", label: "Men", icon: FaPerson },
   { id: "women", label: "Women", icon: GrRestroomWomen },
@@ -109,17 +113,28 @@ function ShoppingHome() {
     );
   }, [dispatch]);
 
-  console.log(productList, "productList");
-
   useEffect(() => {
     dispatch(getFeatureImages());
   }, [dispatch]);
 
+  const isMobile = window.innerWidth <= 768;
+
+  const mobileFeatureImageList =[img, img2, img3]
+
   return (
     <div className="flex flex-col min-h-screen bg-[#f4f7f7]">
       <div className="relative w-full h-[600px] overflow-hidden">
-        {featureImageList && featureImageList.length > 0
-          ? featureImageList.map((slide, index) => (
+      {isMobile
+          ? mobileFeatureImageList.map((slide, index) => (
+              <img
+                src={slide}
+                key={index}
+                className={`${
+                  index === currentSlide ? "opacity-100" : "opacity-0"
+                } absolute top-0 left-0 w-full h-full object-cover transition-opacity duration-1000`}
+              />
+            ))
+          : featureImageList.map((slide, index) => (
               <img
                 src={slide?.image}
                 key={index}
@@ -127,16 +142,15 @@ function ShoppingHome() {
                   index === currentSlide ? "opacity-100" : "opacity-0"
                 } absolute top-0 left-0 w-full h-full object-cover transition-opacity duration-1000`}
               />
-            ))
-          : null}
+            ))}
         <Button
           variant="outline"
           size="icon"
           onClick={() =>
             setCurrentSlide(
               (prevSlide) =>
-                (prevSlide - 1 + featureImageList.length) %
-                featureImageList.length
+                (prevSlide - 1 + (isMobile ? mobileFeatureImageList : featureImageList).length) %
+                (isMobile ? mobileFeatureImageList : featureImageList).length
             )
           }
           className="absolute top-1/2 left-4 transform -translate-y-1/2 bg-white/80"
@@ -148,7 +162,7 @@ function ShoppingHome() {
           size="icon"
           onClick={() =>
             setCurrentSlide(
-              (prevSlide) => (prevSlide + 1) % featureImageList.length
+              (prevSlide) => (prevSlide + 1) % (isMobile ? mobileFeatureImageList : featureImageList).length
             )
           }
           className="absolute top-1/2 right-4 transform -translate-y-1/2 bg-white/80"
